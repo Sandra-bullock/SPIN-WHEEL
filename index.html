@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Discount Wheel</title>
+    <script src="jquery.js"></script>
+    <script src="phaser.js"></script>
+    <style>
+        body {
+            text-align: center;
+            padding: 0;
+            margin: 0;
+            background-color:#d4d4d8;   
+                 }
+        #dwheel {
+            padding: 10px;
+            margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+           transform: translate(-50%, -50%);
+        }
+        .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #333; /* Example color */
+  color: #fff; /* Example color */
+  padding: 30px 0; /* Adjust padding as needed */
+  z-index: 999; 
+}
+   
+   .header h1 {
+  margin: 0;
+  font-size: 20px; /* Example font size */
+}
+ </style>
+</head>
+<body>
+<div class="header">
+    <h1>Welcome to Jennifer  Aniston Foundation Lucky Spin Wheel Game</h1><p>
+       Be the our today lucky winner for spin wheel 
+    </p>
+    <center><p style="color:red;"><i>TAP ON JENNIFER ANISTON PICTURE TO SPIN THE WHEEL AND WAIT FOR YOUR PRIZE</i></p></center>
+    </div>
+<div id="dwheel"></div>
+
+<script>
+    var game;
+    var dwheel = {};
+    var wheelstarted = false;
+
+    function initializeGame() {
+        var width = window.innerWidth * 0.9; // Adjust width to 90% of screen width
+        var height = window.innerHeight * 0.9; // Adjust height to 90% of screen height
+        game = new Phaser.Game(width, height, Phaser.AUTO, "dwheel");
+    }
+
+    dwheel.Main = {
+        preload: function () {
+            game.load.image("wheel", "Wheel.png");
+            game.load.image("needle", "Needle.png");
+        },
+        create: function () {
+            game.stage.backgroundColor = "#ffffff";
+
+            var wheel = game.add.sprite(game.width / 2, game.height / 2, "wheel");
+            wheel.anchor.setTo(0.5);
+            wheel.scale.setTo(0.5);
+            wheel.inputEnabled = true;
+            wheel.events.onInputDown.add(rotateTheWheel);
+
+            var needle = game.add.sprite(game.width / 2 + 170, game.height / 2, "needle");
+            needle.anchor.setTo(0.5);
+            needle.scale.setTo(0.5);
+
+            function rotateTheWheel() {
+    if (!wheelstarted) {
+        wheelstarted = true;
+        game.add.tween(wheel).to({angle: 1782}, 9000, "Cubic", true).onComplete.add(function () {
+            alert("Congratulations 🎊, You've  Won $600,000.00 From Jennifer aniston foundation Spin Wheel Game. Please Click Ok button to  Continue the necessary steps to claim your reward before it expires in 24hours.");
+            window.location.href = "register.html";
+        });
+    }
+}
+
+        },
+    };
+
+    initializeGame();
+    game.state.add("Main", dwheel.Main);
+    game.state.start("Main");
+
+    // Adjust game size on window resize
+    window.addEventListener("resize", function () {
+        initializeGame();
+        game.state.start("Main");
+    });
+</script>
+
+</div>
+</body>
+</html>
